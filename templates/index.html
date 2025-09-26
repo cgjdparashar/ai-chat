@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multilingual Chat App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.socket.io/4.6.2/socket.io.min.js"></script>
+</head>
+<body>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <h2>🌍 Welcome to Multilingual Chat</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" placeholder="Enter your username" required>
+                </div>
+                
+                <div class="input-group">
+                    <label for="language">Preferred Language:</label>
+                    <select id="language" required>
+                        <option value="">Select Language</option>
+                        <option value="english">English</option>
+                        <option value="hindi">Hindi (हिंदी)</option>
+                        <option value="spanish">Spanish (Español)</option>
+                        <option value="french">French (Français)</option>
+                        <option value="german">German (Deutsch)</option>
+                        <option value="chinese">Chinese (中文)</option>
+                        <option value="japanese">Japanese (日本語)</option>
+                        <option value="korean">Korean (한국어)</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="room">Chat Room:</label>
+                    <input type="text" id="room" placeholder="Enter room name (optional)" value="general">
+                </div>
+                
+                <button type="submit">Join Chat</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Chat Interface -->
+    <div id="chatContainer" class="hidden">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="header-left">
+                <h1>💬 Multilingual Chat</h1>
+                <span id="roomName">Room: general</span>
+            </div>
+            
+            <div class="header-right">
+                <div class="user-info">
+                    <span id="currentUser">User</span>
+                    <select id="languageSelector" class="language-selector">
+                        <option value="english">English</option>
+                        <option value="hindi">Hindi (हिंदी)</option>
+                        <option value="spanish">Spanish (Español)</option>
+                        <option value="french">French (Français)</option>
+                        <option value="german">German (Deutsch)</option>
+                        <option value="chinese">Chinese (中文)</option>
+                        <option value="japanese">Japanese (日本語)</option>
+                        <option value="korean">Korean (한국어)</option>
+                    </select>
+                </div>
+                
+                <button id="leaveBtn" class="leave-btn">Leave Chat</button>
+            </div>
+        </div>
+
+        <!-- Chat Content -->
+        <div class="chat-content">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-section">
+                    <h3>🌐 Translation Status</h3>
+                    <div id="translationStatus" class="status-indicator">
+                        <span class="status-dot active"></span>
+                        <span>Ollama Ready</span>
+                    </div>
+                </div>
+                
+                <div class="sidebar-section">
+                    <h3>👥 Online Users</h3>
+                    <div id="usersList" class="users-list">
+                        <!-- Users will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Messages Area -->
+            <div class="messages-area">
+                <div id="messages" class="messages">
+                    <!-- Messages will appear here -->
+                </div>
+                
+                <!-- Message Input -->
+                <div class="message-input-container">
+                    <div class="input-wrapper">
+                        <input type="text" id="messageInput" placeholder="Type your message..." autocomplete="off">
+                        <button id="sendBtn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Connection Status -->
+    <div id="connectionStatus" class="connection-status hidden">
+        <span id="statusText">Connecting...</span>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

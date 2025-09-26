@@ -1,0 +1,35 @@
+MULTILINGUAL CHAT APPLICATION
+============================
+
+Quick Start Guide
+-----------------
+
+1. INSTALL OLLAMA:
+   - Download from: https://ollama.ai
+   - Run: ollama pull llama3.2
+   - Start: ollama serve
+
+2. INSTALL DEPENDENCIES:
+   - Run: pip install -r requirements.txt
+
+3. START APPLICATION:
+   - Windows: Double-click start.bat
+   - Linux/Mac: ./start.sh
+   - Manual: python app.py
+
+4. OPEN BROWSER:
+   - Go to: http://localhost:5000
+
+FEATURES:
+- Real-time chat with automatic translation
+- Support for 8+ languages including English and Hindi
+- Multiple chat rooms
+- Modern responsive UI
+- Live user presence
+
+TROUBLESHOOTING:
+- If Ollama fails: Check if ollama serve is running
+- If port 5000 busy: Kill process or change port in app.py
+- Translation issues: Verify ollama model is installed
+
+For detailed documentation, see README.md
