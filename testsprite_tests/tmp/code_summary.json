@@ -1,0 +1,359 @@
+{
+  "tech_stack": ["Python", "Flask", "Flask-SocketIO", "JavaScript", "HTML", "CSS", "WebSockets", "Ollama", "Requests", "Logging"],
+  "features": [
+    {
+      "name": "Health Check API",
+      "description": "REST API endpoint for application health monitoring",
+      "files": ["app.py"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "Health Check API",
+          "version": "1.0.0"
+        },
+        "paths": {
+          "/api/health": {
+            "get": {
+              "summary": "Get application health status",
+              "responses": {
+                "200": {
+                  "description": "Returns application health status",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "status": {"type": "string"},
+                          "timestamp": {"type": "string"},
+                          "ollama_status": {"type": "string"},
+                          "version": {"type": "string"}
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Home Page",
+      "description": "Main chat interface that serves the HTML template with login modal",
+      "files": ["app.py", "templates/index.html", "static/style.css", "static/script.js"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "Chat Home API",
+          "version": "1.0.0"
+        },
+        "paths": {
+          "/": {
+            "get": {
+              "summary": "Get the main chat page",
+              "responses": {
+                "200": {
+                  "description": "Returns the chat interface HTML page",
+                  "content": {
+                    "text/html": {
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "WebSocket Connection Management",
+      "description": "Handle user connections and disconnections via WebSocket",
+      "files": ["app.py"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "WebSocket Connection API",
+          "version": "1.0.0"
+        },
+        "paths": {
+          "/socket.io/": {
+            "get": {
+              "summary": "WebSocket connection endpoint",
+              "description": "Handles connect and disconnect events for real-time communication",
+              "responses": {
+                "101": {
+                  "description": "WebSocket connection established successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Join Chat Room",
+      "description": "Allow users to join chat rooms with username, language preference, and room selection",
+      "files": ["app.py"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "Join Chat Room API",
+          "version": "1.0.0"
+        },
+        "components": {
+          "schemas": {
+            "JoinChatRequest": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "description": "User's display name"
+                },
+                "language": {
+                  "type": "string",
+                  "description": "User's preferred language for translation"
+                },
+                "room": {
+                  "type": "string",
+                  "description": "Chat room name",
+                  "default": "general"
+                }
+              },
+              "required": ["username", "language"]
+            }
+          }
+        },
+        "paths": {
+          "/join_chat": {
+            "post": {
+              "summary": "Join a chat room",
+              "description": "Allows a user to join a specific chat room with language preferences",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/JoinChatRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Successfully joined chat room"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Send Message",
+      "description": "Send messages in chat rooms with automatic translation to other users' languages",
+      "files": ["app.py"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "Send Message API",
+          "version": "1.0.0"
+        },
+        "components": {
+          "schemas": {
+            "SendMessageRequest": {
+              "type": "object",
+              "properties": {
+                "content": {
+                  "type": "string",
+                  "description": "Message content to send"
+                }
+              },
+              "required": ["content"]
+            },
+            "MessageResponse": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "content": {
+                  "type": "string"
+                },
+                "timestamp": {
+                  "type": "string"
+                },
+                "is_translated": {
+                  "type": "boolean"
+                },
+                "is_own": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        },
+        "paths": {
+          "/send_message": {
+            "post": {
+              "summary": "Send a message to the chat room",
+              "description": "Sends a message that gets translated for users in different languages",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/SendMessageRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Message sent successfully",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/MessageResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Change Language",
+      "description": "Allow users to dynamically change their preferred language for message translation",
+      "files": ["app.py"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "Change Language API",
+          "version": "1.0.0"
+        },
+        "components": {
+          "schemas": {
+            "ChangeLanguageRequest": {
+              "type": "object",
+              "properties": {
+                "language": {
+                  "type": "string",
+                  "description": "New preferred language for the user"
+                }
+              },
+              "required": ["language"]
+            }
+          }
+        },
+        "paths": {
+          "/change_language": {
+            "post": {
+              "summary": "Change user's preferred language",
+              "description": "Updates the user's language preference for future message translations",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/ChangeLanguageRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Language changed successfully"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "Translation REST API",
+      "description": "REST API endpoint for text translation using Ollama gemma3:1b model",
+      "files": ["app.py"],
+      "api_doc": {
+        "openapi": "3.0.0",
+        "info": {
+          "title": "Translation API",
+          "version": "1.0.0"
+        },
+        "components": {
+          "schemas": {
+            "TranslationRequest": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "description": "Text to translate"
+                },
+                "target_language": {
+                  "type": "string",
+                  "description": "Target language for translation"
+                },
+                "source_language": {
+                  "type": "string",
+                  "description": "Source language (auto-detect if not specified)",
+                  "default": "auto"
+                }
+              },
+              "required": ["text", "target_language"]
+            }
+          }
+        },
+        "paths": {
+          "/api/translate": {
+            "post": {
+              "summary": "Translate text between languages",
+              "description": "Uses Ollama gemma3:1b model to translate text from one language to another",
+              "requestBody": {
+                "required": true,
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/TranslationRequest"
+                    }
+                  }
+                }
+              },
+              "responses": {
+                "200": {
+                  "description": "Translation completed successfully",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "type": "object",
+                        "properties": {
+                          "original_text": {"type": "string"},
+                          "translated_text": {"type": "string"},
+                          "source_language": {"type": "string"},
+                          "target_language": {"type": "string"},
+                          "model_used": {"type": "string"}
+                        }
+                      }
+                    }
+                  }
+                },
+                "400": {
+                  "description": "Invalid request data"
+                },
+                "500": {
+                  "description": "Translation service error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

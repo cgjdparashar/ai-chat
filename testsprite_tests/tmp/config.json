@@ -1,0 +1,17 @@
+{
+  "status": "commited",
+  "type": "backend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:5000",
+  "backendAuthType": "public",
+  "executionArgs": {
+    "projectName": "ai-chat",
+    "projectPath": "c:\\VickyJD\\CG\\Project\\SWE-Project Gen AI\\repo\\ai-chat",
+    "testIds": [],
+    "additionalInstruction": "Run comprehensive tests for all REST API endpoints, WebSocket functionality, translation service with gemma3:1b model, and frontend user interactions. Focus on identifying any issues with the current implementation.",
+    "envs": {
+      "API_KEY": "sk-user-BwtenGd9vYCpwGLF_Gl-GoTH2hzo_CC1k7W4wpKaOjKJ9BNdtSEFEZsvFhnNJcpt-6sKVuTgiLyJLA3SDGrArnsNuH_OVQlU-CcrMqVUVqztOYc_1qdx_ps0cKFh5LaVGcc"
+    }
+  },
+  "proxy": "http://25e7ee88-5aff-49de-ae9a-ab07b054e97b:PKZA3Qm5V8pT2m6TWIfHWZVpkyZhIwwc@tun.testsprite.com:8080"
+}

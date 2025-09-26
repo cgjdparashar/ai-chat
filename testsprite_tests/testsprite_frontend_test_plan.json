@@ -1,0 +1,388 @@
+[
+  {
+    "id": "TC001",
+    "title": "Successful user login with valid username and language selection",
+    "description": "Verify that a user can successfully log in by providing a valid non-empty username and selecting a preferred language.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the chat application."
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid username in the login modal."
+      },
+      {
+        "type": "action",
+        "description": "Select a preferred language from the available list."
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the user is logged in and presented with the chat interface."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "Login failure when username is empty or missing",
+    "description": "Ensure the login process enforces the requirement for a non-empty username and prevents login when it is missing.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the chat application."
+      },
+      {
+        "type": "action",
+        "description": "Leave the username field empty."
+      },
+      {
+        "type": "action",
+        "description": "Select a preferred language."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to submit the login form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify that login is prevented and an appropriate error message is displayed indicating the username is required."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "Login failure when preferred language is not selected",
+    "description": "Verify that login is not allowed when the user does not select a preferred language during login.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the chat application."
+      },
+      {
+        "type": "action",
+        "description": "Enter a valid username."
+      },
+      {
+        "type": "action",
+        "description": "Do not select a preferred language."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to submit the login form."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure login is blocked and a relevant validation message about language selection is shown."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "Join existing chat room successfully",
+    "description": "Test that a user can join an existing chat room by specifying the room name along with a valid username and language.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login successfully with valid username and language."
+      },
+      {
+        "type": "action",
+        "description": "Enter an existing chat room name in the join room field."
+      },
+      {
+        "type": "action",
+        "description": "Send a join request."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is added to the specified chat room and user presence updates are received."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Create and join new chat room dynamically",
+    "description": "Validate that a user can create a new chat room by specifying a new room name and successfully join it.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login with a valid username and preferred language."
+      },
+      {
+        "type": "action",
+        "description": "Input a unique new chat room name."
+      },
+      {
+        "type": "action",
+        "description": "Submit request to join this new chat room."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the new chat room is created and the user has joined with presence information updated."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Send text message and receive correctly translated messages",
+    "description": "Verify that when a user sends a message in the chat room, it is automatically translated into the preferred languages of other participants and displayed accordingly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "User A joins a chat room with preferred language English."
+      },
+      {
+        "type": "action",
+        "description": "User B joins the same chat room with preferred language Spanish."
+      },
+      {
+        "type": "action",
+        "description": "User A sends a message in English."
+      },
+      {
+        "type": "assertion",
+        "description": "User A sees the original message with is_own flag true and is_translated false."
+      },
+      {
+        "type": "assertion",
+        "description": "User B receives the message automatically translated into Spanish with is_translated true."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Validate message sending with empty content is rejected",
+    "description": "Ensure that attempting to send a message with empty or whitespace-only content is disallowed and an error is returned.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Join a chat room successfully."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to send a message with empty string as content."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the system prevents sending the message and returns an error or validation feedback."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Change user language preference during active session",
+    "description": "Test that a user can dynamically change their preferred language while in a chat room and subsequent incoming messages are translated accordingly.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login and join a chat room with initial language preference X."
+      },
+      {
+        "type": "action",
+        "description": "User changes their preferred language to language Y via the change language API."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the language preference update is acknowledged."
+      },
+      {
+        "type": "action",
+        "description": "Another user sends a message in the room."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the received message is translated into the new preferred language Y."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Handle invalid language code during language change request",
+    "description": "Verify that submitting an invalid or unsupported language code to the change language API returns a proper error response without altering user state.",
+    "category": "error handling",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login and join a chat room successfully."
+      },
+      {
+        "type": "action",
+        "description": "Send a change language request with an invalid language code format."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the API responds with an error status and message indicating invalid language code."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure the user's previous language preference remains unchanged."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Maintain WebSocket connection and auto-reconnect on network interruption",
+    "description": "Confirm that when the WebSocket connection is interrupted due to network issues, the client automatically attempts to reconnect without losing messages or session state.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "User logs in and joins a chat room with active WebSocket connection."
+      },
+      {
+        "type": "action",
+        "description": "Simulate network disruption causing WebSocket disconnection."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the WebSocket client attempts to reconnect automatically."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm user session state (username, room, language) is preserved after reconnection."
+      },
+      {
+        "type": "action",
+        "description": "Send a message after reconnection."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the message is delivered successfully with translations as expected."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Real-time user presence updates on user join and leave",
+    "description": "Validate that all users in a chat room receive immediate and accurate notifications when a user joins or leaves, with user presence indicators updated in real-time.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "User A joins a chat room."
+      },
+      {
+        "type": "action",
+        "description": "User B joins the same chat room."
+      },
+      {
+        "type": "assertion",
+        "description": "User A receives a notification that User B joined and online user list is updated."
+      },
+      {
+        "type": "action",
+        "description": "User B disconnects or leaves the chat room."
+      },
+      {
+        "type": "assertion",
+        "description": "User A receives a notification that User B left and the presence list updates accordingly."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Translation API error handling with fallback",
+    "description": "Check that if the Ollama translation service returns an error or failure (e.g., server error), the system handles the failure gracefully and still delivers the original message content with an appropriate indicator.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Send a message that triggers the translation service."
+      },
+      {
+        "type": "action",
+        "description": "Simulate a translation service error response (HTTP 500)."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the original message is sent to users without translation."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm the message metadata indicates translation was not successful."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Verify UI responsiveness on different devices and screen sizes",
+    "description": "Ensure the chat application's user interface is fully responsive and functional on desktop browsers and multiple mobile device screen sizes without layout or usability issues.",
+    "category": "ui",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open the chat application on a desktop browser."
+      },
+      {
+        "type": "assertion",
+        "description": "Validate that all UI components display correctly and are functional."
+      },
+      {
+        "type": "action",
+        "description": "Open the chat application on a range of mobile devices and emulator screen sizes (e.g. iPhone, Android phones)."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm UI elements adjust appropriately with no overlapping, truncation, or usability problems."
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Message delivery isolation between multiple chat rooms",
+    "description": "Validate that messages sent in one chat room are not visible in other chat rooms and that user and message data is isolated per room.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "User A joins Room 1."
+      },
+      {
+        "type": "action",
+        "description": "User B joins Room 2."
+      },
+      {
+        "type": "action",
+        "description": "User A sends a message in Room 1."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure User B does not receive the message sent in Room 1."
+      },
+      {
+        "type": "action",
+        "description": "User B sends a message in Room 2."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure User A does not receive the message sent in Room 2."
+      }
+    ]
+  }
+]

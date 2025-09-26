@@ -1,0 +1,32 @@
+[
+  {
+    "id": "TC001",
+    "title": "get_main_chat_page",
+    "description": "Verify that the GET / endpoint returns the main chat interface HTML page with status code 200."
+  },
+  {
+    "id": "TC002",
+    "title": "websocket_connection_establishment",
+    "description": "Test the WebSocket connection endpoint /socket.io/ to ensure it establishes a connection successfully and returns status code 101."
+  },
+  {
+    "id": "TC003",
+    "title": "join_chat_room_with_valid_data",
+    "description": "Test the POST /join_chat endpoint with valid username, language, and optional room to ensure the user can join the chat room successfully."
+  },
+  {
+    "id": "TC004",
+    "title": "send_message_with_translation",
+    "description": "Verify that POST /send_message sends a message and that the message is automatically translated for users with different language preferences, returning the correct message response."
+  },
+  {
+    "id": "TC005",
+    "title": "change_user_language_preference",
+    "description": "Test the POST /change_language endpoint to update the user's preferred language and verify that subsequent messages are translated accordingly."
+  },
+  {
+    "id": "TC006",
+    "title": "translate_text_using_ollama_api",
+    "description": "Verify that POST /translate correctly translates text from the source language to the target language using the Ollama API and handles errors gracefully."
+  }
+]
