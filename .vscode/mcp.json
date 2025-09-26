@@ -6,6 +6,15 @@
       "env": {
         "API_KEY": "sk-user-BwtenGd9vYCpwGLF_Gl-GoTH2hzo_CC1k7W4wpKaOjKJ9BNdtSEFEZsvFhnNJcpt-6sKVuTgiLyJLA3SDGrArnsNuH_OVQlU-CcrMqVUVqztOYc_1qdx_ps0cKFh5LaVGcc"
       }
+    },
+    "browsermcp": {
+      "command": "npx",
+      "args": ["@browsermcp/mcp@latest"]
+    },
+    "atlassian": {
+      "type": "http",
+      "url": "http://50.85.207.90/atlassian/mcp",
+      "tools": ["*"]
     }
   }
 }

@@ -21,7 +21,7 @@ rooms = {}
 
 # Ollama configuration with environment variables
 OLLAMA_URL = os.getenv('OLLAMA_URL', 'http://localhost:11434/api/generate')
-OLLAMA_MODEL = os.getenv('OLLAMA_MODEL', 'gemma3n:e2b')
+OLLAMA_MODEL = os.getenv('OLLAMA_MODEL', 'gemma3:4b')
 
 def test_ollama_connection():
     """Test if Ollama is running and accessible"""
